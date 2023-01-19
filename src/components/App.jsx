@@ -1,26 +1,35 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import css from '../components/App.module.css';
-import { useLocalStorage } from '../components/hooks/useLocalStorege';
+// import { useLocalStorage } from '../components/hooks/useLocalStorege';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterContact, addContact, removeContact } from 'redux/phonebookSlice';
 
 export const App = () => {
-  const [contacts, setContacts] = useLocalStorage('contacts', []);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useLocalStorage('contacts', []);
+  // const [filter, setFilter] = useState('');
+  const filter = useSelector(state => state.phonebook.contacts.filter);
+  const contacts = useSelector(state => state.phonebook.contacts.contacts);
+  const dispatch = useDispatch();
 
-  const handleSubmit = ({ name, number }) => {
-    const id = nanoid();
-    const contactsLists = [...contacts];
+  const handleSubmit = data => {
+    // const id = nanoid();
+    // const contactsLists = [...contacts];
 
-    if (contactsLists.findIndex(contact => name === contact.name) !== -1) {
-      alert(`${name} is already in contacts.`);
-    } else {
-      contactsLists.push({ name, id, number });
+    // if (contactsLists.findIndex(contact => name === contact.name) !== -1) {
+    //   alert(`${name} is already in contacts.`);
+    // } else {
+    //   contactsLists.push({ name, id, number });
+    // }
+    if (contacts.findIndex(contact => data.name === contact.name) !== -1) {
+      alert(`${data.name} is already in contacts.`);
+      return;
     }
-
-    setContacts(contactsLists);
+    // setContacts(contactsLists);
+    dispatch(addContact({ ...data, id: nanoid() }));
   };
 
   const getFilteredContacts = () => {
@@ -32,14 +41,16 @@ export const App = () => {
   };
 
   const handleChange = e => {
-    const filter = e.target.value;
-    setFilter(filter);
+    // const filter = e.target.value;
+    // setFilter(filter);
+    dispatch(filterContact(e.target.value));
   };
 
   const handleDelete = elementDeleteId => {
-    setContacts(prevState =>
-      prevState.filter(contact => contact.id !== elementDeleteId)
-    );
+    // setContacts(prevState =>
+    //   prevState.filter(contact => contact.id !== elementDeleteId)
+    // );
+    dispatch(removeContact(elementDeleteId));
   };
 
   return (
