@@ -16,7 +16,7 @@ export const App = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = data => {
-    // const id = nanoid();
+    const id = nanoid();
     // const contactsLists = [...contacts];
 
     // if (contactsLists.findIndex(contact => name === contact.name) !== -1) {
@@ -29,7 +29,7 @@ export const App = () => {
       return;
     }
     // setContacts(contactsLists);
-    dispatch(addContact({ ...data, id: nanoid() }));
+    dispatch(addContact({ ...data, id }));
   };
 
   const getFilteredContacts = () => {
