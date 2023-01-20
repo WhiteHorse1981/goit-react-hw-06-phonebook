@@ -7,12 +7,13 @@ import css from '../components/App.module.css';
 // import { useLocalStorage } from '../components/hooks/useLocalStorege';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterContact, addContact, removeContact } from 'redux/phonebookSlice';
+import { selectorContacts, selectorFilter } from 'redux/selector';
 
 export const App = () => {
   // const [contacts, setContacts] = useLocalStorage('contacts', []);
   // const [filter, setFilter] = useState('');
-  const filter = useSelector(state => state.phonebook.contacts.filter);
-  const contacts = useSelector(state => state.phonebook.contacts.contacts);
+  const filter = useSelector(selectorFilter);
+  const contacts = useSelector(selectorContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = data => {
