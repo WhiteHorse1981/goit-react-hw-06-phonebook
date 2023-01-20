@@ -3,7 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const initialState = {
-  contacts: {
+  phonebookContacts: {
     contacts: [],
     filter: '',
   },
@@ -14,15 +14,16 @@ export const phonebookSlice = createSlice({
   initialState,
   reducers: {
     addContact: (state, action) => {
-      state.contacts.contacts.push(action.payload);
+      state.phonebookContacts.contacts.push(action.payload);
     },
     removeContact: (state, action) => {
-      state.contacts.contacts = state.contacts.contacts.filter(
-        contact => contact.id !== action.payload
-      );
+      state.phonebookContacts.contacts =
+        state.phonebookContacts.contacts.filter(
+          contact => contact.id !== action.payload
+        );
     },
     filterContact: (state, action) => {
-      state.contacts.filter = action.payload;
+      state.phonebookContacts.filter = action.payload;
     },
   },
 });
